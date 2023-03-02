@@ -28,6 +28,12 @@ module.exports = {
       filename: './data/dev.db3'
     },
     useNullAsDefault: true,
+    pool: {
+      afterCreate: (conn, done) => {
+        // sqlite engine'e bağlandığımızda aşağıdaki kod çalışacak:
+        conn.run('PRAGMA foreign_keys = ON', done); // FK kullanımını açmaya zorlayacak
+      },
+    },
     migrations: {
       directory: './data/migrations'
     },
